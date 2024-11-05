@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BaiTHCuoiKy</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery-3.7.1.min.js"></script>
+</head>
+<style>
+    .mauDo{
+        font-size: 100%;
+        color: red;
+    }
+
+    .mauXanh{
+        font-size: 100%;
+        color: green;
+    }
+
+    [class*="col-"]{
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    li{
+        width: 150px;
+    }
+
+    #form1{
+        height: 600px;
+    }
+
+    
+</style>
+<script>
+    $(document).ready(function(){
+        var i=2;
+        $("#btnD").click(function(){
+            $("#myModal").modal();
+        })
+
+        function kiemTraMa() {
+            var mauKT=/^([0-9]{1}[0-9]{1})({0-9}{7})$/;
+            var maValue=$("#txtMa").val();
+            if (maValue=="") {
+                $("#tbMa").html("Bat buoc nhap");
+                $("#tbMa").addClass("mauDo");
+                $("#tbMa").removeClass("mauXanh");
+                return false;
+            } else if (!mauKT.test(maValue)) {
+                $("#tbMa").html("Ma khong hop le");
+                $("#tbMa").addClass("mauDo");
+                $("#tbMa").removeClass("mauXanh");
+                return false;
+            } else {
+                $("#tbMa").html("Nhap dung roi");
+                $("#tbMa").addClass("mauXanh");
+                $("#tbMa").removeClass("mauDo");
+                return true;
+            }
+        };
+        $("#txtMa").blur(kiemTraMa);
+
+        function kiemTraHT() {
+            var regex=/^([A-Z]{1}[a-z]+)(\s[A-Z]{1}[a-z]*)+$/;
+            var hoten=$("#txtHT").val();
+            if (hoten=="") {
+                $("#tbTen").html("Nhap lai");
+                $("#tbTen").addClass("mauDo");
+                $("#tbTen").removeClass("mauXanh");
+                return false;
+            } else if (regex.test(hoten)==false) {
+                $("#tbTen").html("Nhap sai");
+                $("#tbTen").addClass("mauDo");
+                $("#tbTen").removeClass("mauXanh");
+                return false;
+            } else {
+                $("#tbTen").html("Nhap dung");
+                $("#tbTen").addClass("mauXanh");
+                $("#tbTen").removeClass("mauDo");
+                return true;
+            }
+        };
+        $("#txtHT").blur(kiemTraHT);
+        $("btnSave").click(function () {
+            if(!kiemTraMa() || !kiemTraHT()|| !kiemTraDT()) {
+                alert("Nhap lai");
+                return false;
+            } else {
+            var ma=$("#txtMa").val();
+            var ht=$("#txtHT").val();
+            var dc=$("#txtDC").val();
+        
+            var them=`
+            <tr>
+                <td>`+(i++)+`</td>
+                <td>`+ma+`</td>
+                <td>`+ht+`</td> 
+                <td>`+date+`</td>
+                <td>`+cv+`</td> 
+                <td>`+bacluong+`</td>              
+            </tr>`;
+        $("#tbDanhSach").append(them);
+        $("#myModal").modal("hide");
+        return true;
+            }
+        });
+
+    });
+    
+</script>
+<body>
+    <div class="container border">
+        <div class="row bg-primary">
+            <h3 class="mx-auto text-light text-center">DANH SACH LUONG NHAN VIEN</h3>
+        </div>
+        <div class="row">
+            <nav class="navbar">
+                <ul class="nav">
+                    <li class="nav-item"><a href="#" class="nav-link">Trang Chu</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" >Thong Tin</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" id="btnD" data-bs-toggle="modal" data-bs-target="#myModal">Cap Nhat Luong</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="row">
+            <table class="table tabble-bordered table-hover" id="tbDanhSach">
+                <tr>
+                    <th>STT</th>
+                    <th>Ma nhan su</th>
+                    <th>Ho ten</th>
+                    <th>Ngay hop dong</th>
+                    <th>Chuc vu</th>
+                    <th>Bac luong</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>912345678</td>
+                    <td>Hoang Minh Vuong</td>
+                    <td>12/5/2000</td>
+                    <td>Nhan vien</td>
+                    <td>1.86</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">THONG TIN NHAN VIEN</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" class="form-control" id="form1">
+                            <div class="row form-group p-1"> 
+                                <div class="col-3 col-sm-3">
+                                    <label for="">Mã nhân viên</label>
+                                </div>
+                                <div class="col-6 col-sm-6">
+                                    <input type="text" class="form-control" id="txtMa" placeholder="Ma nhan su">
+                                </div>
+                                <div class="col-3 col-sm-3 p-2">
+                                    <span id="tbMa" >(*)</span>
+                                </div>
+                            </div>
+
+                            <div class="row form-group p-1">
+                                <div class="col-3 col-m-3">
+                                    <label for="">Ten nhan vien</label>
+                                </div>
+                                <div class="col-6 col-sm-6">
+                                    <input type="text" class="form-control" id="txtHT" placeholder="Ho ten">
+                                </div>
+                                <div class="col-3 col-sm-3" p-2>
+                                    <span id="tbHT" >(*)</span>
+                                </div>
+                            </div>
+
+                            <div class="row form-group p-1">
+                                <div class="col-3 col-sm-3">
+                                    <label for="">Ngay vao cong ty</label>
+                                </div>
+                                <div class="col-6 col-sm-6">
+                                    <input type="date" class="form-control" id="txtDate">
+                                </div>
+                                <div class="col-3" col-sm-3 p-2>
+                                    <span id="tbDate">(*)</span>
+                                </div> 
+                            </div>
+
+                            <div class="row form-group p-1">
+                                <div class="col-3 col-sm-3">
+                                    <label for="">Chuc vu</label>
+                                </div>
+                                <div class="col-6 col-sm-6">
+                                    <select class="form-control" id="txtCV">
+                                        <option value="1">Can bo quan ly</option>
+                                        <option value="2">Nhan vien</option>
+                                    </select>
+                                </div>
+                                <div class="col-3" col-sm-3 p-2>
+                                    <span id="tbCV">(*)</span>
+                                </div>
+                            </div>
+
+                            <div class="row form-group p-1">
+                                <div class="col-3 col-sm-3">
+                                    <label for="">Bac luong</label>
+                                </div>
+                                <div class="col-6 col-sm-6">
+                                    <select class="form-control" id="txtB">
+                                        <option value="1">Bac 1</option>
+                                        <option value="2">Bac 2</option>
+                                    </select>
+                                </div>
+                                
+                                
+                            </div>
+
+                            <div class="row p-1">
+                                <div class="col-sm-6">
+                                    <input type="button" value="Them" id="btnSave" class="btn btn-info btn-block">
+                                </div>
+                            </div>
+                            <br>
+
+                            <div class="row p-1">
+                                <div class="col-sm-6">
+                                    <input type="button" value="Close" id="btnSave" class="btn btn-info btn-block">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <h4 class="bg-info">22654401: Le Quynh Huong</h4>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
